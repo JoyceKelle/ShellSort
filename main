@@ -1,0 +1,93 @@
+da importação aleatória randint
+importar timeit
+import matplotlib as mpl
+import matplotlib.pyplot como plt
+importação itertools como ele
+
+mpl.use ( ' Agg ' )
+
+def  geraListaAleatoria ( tam ):
+	lista = []
+	enquanto  len (lista) < tam:
+		n = randint ( 1 , 1 * tam)
+		se n não está  na lista: lista.append (n)
+	return lista
+
+def  geraListaCresc ( tam ):
+    lista = []
+    i =  0
+    enquanto eu <= tam:
+        lista.append (i)
+        i + = 1
+    return lista
+
+def  geraListaDecresc ( tam ):
+    lista = []
+    enquanto tam > =  0 :
+        lista.append (tam)
+        tam - = 1
+    return lista
+
+def  shellSort ( arr ):
+  
+    
+    n =  len (arr)
+    gap = n // 2
+   
+    enquanto gap >  0 :
+  
+        para eu na  faixa (gap, n):
+  
+            temp = arr [i]
+  
+            j = i
+            enquanto   j > = gap e arr [j - gap] > temp:
+                arr [j] = arr [j - lacuna]
+                j - = gap
+   
+            arr [j] = temp
+        intervalo // =  2
+        
+        
+def  desenhaGrafico ( x , y , xl , yl , label ):
+	fig = plt.figure ( figsize = ( 10 , 8 ))
+	ax = fig.add_subplot ( 111 )
+	ax.plot (x, y, label  =  ' shellSort ' )
+	ax.legend ( bbox_to_anchor = ( 1 , 1 ), bbox_transform = plt.gcf (). transFigura)
+	plt.ylabel (yl)
+	plt.xlabel (xl)
+	fig.savefig (label)
+    
+x = [ 10000 , 20000 , 30000 , 40000 , 50000 ]
+
+yPiorCaso = []
+yMedioCaso = []
+yMelhorCaso = []
+
+lista = [ 1 , 2 , 3 , 4 , 5 , 6 ]
+listaPermutada =  list (it.permutations (lista, 6 ))
+
+tempos = []
+
+para i em x:
+    lista = geraListaDecresc (i)
+    yPiorCaso.append (timeit.timeit ( ' shellSort ( {} ) ' .format (lista), setup = " de __main__ import shellSort " , número = 1 ))
+    
+    lista = geraListaAleatoria (i)
+    yMedioCaso.append (timeit.timeit ( ' shellSort ( {} ) ' .format (lista), setup = " de __main__ import shellSort " , número = 1 ))
+    
+    lista = geraListaCresc (i)
+    yMelhorCaso.append (timeit.timeit ( ' shellSort ( {} ) ' .format (lista), setup = " de __main__ import shellSort " , número = 1 ))
+
+desenhaGrafico (x, yPiorCaso, ' Quantidade ' , ' Tempo ' , ' Pior_Caso ' )    
+desenhaGrafico (x, yMedioCaso, ' Quantidade ' , ' Tempo ' , ' Medio_Caso ' )
+desenhaGrafico (x, yMelhorCaso, ' Quantidade ' , ' Tempo ' , ' Melhor_Caso ' )
+
+
+para i em listaPermutada:
+    tempos.append (timeit.timeit ( ' shellSort ( {} ) ' .format (listaPermutada), setup = " de __main__ import shellSort " , número = 1 ))
+    
+maxIdx = tempos.index ( max (tempos))
+
+print ( ' Tempo mais demorado: ' , max (tempos))
+print (listaPermutada [maxIdx])  
